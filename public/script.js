@@ -91,11 +91,13 @@ window.addEventListener('keyup', (e) => {
 
 // Touch input handling
 let touchX = null;
+let touchActive = false;
 
 window.addEventListener('touchstart', (e) => {
     if (isPlaying && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
         e.preventDefault(); 
     }
+    touchActive = true;
     touchX = e.touches[0].clientX;
     handleTouch(touchX);
 }, { passive: false });
@@ -104,14 +106,17 @@ window.addEventListener('touchmove', (e) => {
     if (isPlaying && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
         e.preventDefault();
     }
-    touchX = e.touches[0].clientX;
-    handleTouch(touchX);
+    if (touchActive) {
+        touchX = e.touches[0].clientX;
+        handleTouch(touchX);
+    }
 }, { passive: false });
 
 window.addEventListener('touchend', (e) => {
     if (isPlaying && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
         e.preventDefault();
     }
+    touchActive = false;
     touchX = null;
     keys.ArrowLeft = false;
     keys.ArrowRight = false;
@@ -119,7 +124,9 @@ window.addEventListener('touchend', (e) => {
 
 function handleTouch(x) {
     if (!isPlaying) return;
-    if (x < window.innerWidth / 2) {
+    const rect = canvas.getBoundingClientRect();
+    const midX = rect.left + rect.width / 2;
+    if (x < midX) {
         keys.ArrowLeft = true;
         keys.ArrowRight = false;
     } else {
@@ -131,6 +138,7 @@ function handleTouch(x) {
 // Device orientation (tilt to move)
 window.addEventListener('deviceorientation', (e) => {
     if (!isPlaying) return;
+    if (touchActive) return; // Touch overrides tilt completely
     
     // gamma is the left-to-right tilt in degrees, where right is positive
     const tilt = e.gamma;
@@ -144,10 +152,8 @@ window.addEventListener('deviceorientation', (e) => {
             keys.ArrowLeft = true;
             keys.ArrowRight = false;
         } else { // Neutral
-            if (touchX === null) {
-                keys.ArrowLeft = false;
-                keys.ArrowRight = false;
-            }
+            keys.ArrowLeft = false;
+            keys.ArrowRight = false;
         }
     }
 });

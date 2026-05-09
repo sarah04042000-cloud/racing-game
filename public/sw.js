@@ -1,4 +1,4 @@
-const CACHE_NAME = 'racing-game-v1';
+const CACHE_NAME = 'racing-game-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -13,6 +13,7 @@ const ASSETS_TO_CACHE = [
 ];
 
 self.addEventListener('install', (event) => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(ASSETS_TO_CACHE);
@@ -30,7 +31,7 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
 });
 
@@ -39,8 +40,10 @@ self.addEventListener('fetch', (event) => {
     if (event.request.url.includes('/api/')) return;
 
     event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
+        caches.match(event.request, { ignoreSearch: true }).then((response) => {
+            return response || fetch(event.request).catch(() => {
+                console.log('Fetch failed, offline mode active');
+            });
         })
     );
 });
