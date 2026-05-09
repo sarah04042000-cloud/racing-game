@@ -220,3 +220,16 @@ tr:last-child td {
     background: var(--primary-color);
     border-radius: 3px;
 }
+
+/* Mobile Responsive */
+@media (max-width: 450px) {
+    .game-container {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    #gameCanvas {
+        object-fit: cover;
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Neon Racer",
+  "short_name": "Racer",
+  "description": "2D Endless Car Racing Game",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/player_car.png",
+      "sizes": "64x96",
+      "type": "image/png"
+    }
+  ]
+}
