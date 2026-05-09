@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: endless-car-racing-game
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false # You will need to provide this manually in the Render dashboard

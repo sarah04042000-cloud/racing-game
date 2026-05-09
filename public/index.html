@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endless Car Racing Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Start Screen -->
+        <div id="startScreen" class="overlay">
+            <h1>NEON RACER</h1>
+            <p>Use Left/Right Arrows or A/D to move</p>
+            <button id="startBtn" class="btn primary-btn">START GAME</button>
+            <button id="viewLeaderboardBtn" class="btn secondary-btn">LEADERBOARD</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="hidden">
+            <div id="scoreBoard">Score: <span id="currentScore">0</span></div>
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="overlay hidden">
+            <h2>GAME OVER</h2>
+            <p>Your Score: <span id="finalScore">0</span></p>
+            <div class="submit-score">
+                <input type="text" id="usernameInput" placeholder="Enter Username" maxlength="20" required>
+                <button id="submitScoreBtn" class="btn primary-btn">SUBMIT SCORE</button>
+            </div>
+            <p id="submitMessage"></p>
+            <button id="restartBtn" class="btn secondary-btn">PLAY AGAIN</button>
+            <button id="gameOverLeaderboardBtn" class="btn secondary-btn">LEADERBOARD</button>
+        </div>
+
+        <!-- Leaderboard Screen -->
+        <div id="leaderboardScreen" class="overlay hidden">
+            <h2>TOP 10 RACERS</h2>
+            <div class="leaderboard-list">
+                <table id="leaderboardTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Racer</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <!-- Scores will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+            <button id="closeLeaderboardBtn" class="btn secondary-btn">BACK</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
